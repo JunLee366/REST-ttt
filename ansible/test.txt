@@ -1,0 +1,37 @@
+1] Install Ansible on main machine
+
+2] Configure Ansible on main machine
+. cd into /etc/ansible
+
+. nano ansible.cfg to set defaults:
+[defaults]
+host_key_checking = False
+
+. nano hosts to set group and IP:
+[<group>]
+<ip_addr>
+
+. whereever ansible scripts will be written, write a inventory.yaml:
+<group>:
+  hosts:
+    <instance>:
+      ansible_host: <ip_addr>
+
+3] Configure connection to managed servers
+. make ssh key in main server, share public key to managed server in "~/.ssh/authorized_keys"
+
+. use command: "ansible all -m ping"
+. use command: "ansible <group> -m ping"
+
+4] Run Ansible scripts
+After testing ssh connection, run these scripts:
+ansible-playbook -i inventory.yaml install.yaml
+
+  ********** IMPORTANT **********
+  . Before continuing Ansible, test ssh connection in cloud instance with a sample command from GitHub:
+  ssh -T git@github.com
+  [unless there is a way to bypass ssh security, git cloning with Ansible will not work]
+  *******************************
+
+ansible-playbook -i inventory.yaml nginx.yaml
+ansible-playbook -i inventory.yaml project.yaml

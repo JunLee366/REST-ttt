@@ -1,0 +1,40 @@
+- name: Install software in server
+  hosts: all
+  vars:
+    src_private_key: /home/ubuntu/.ssh/id_ed25519   # /home/ubuntu/.ssh/<private_key>
+    dest_private_key: /root/.ssh/id_ed25519         # /root/.ssh/<private_key> 
+
+  tasks:
+    - name: Copy ptivate .ssh key to cloud instance
+      copy:
+        src: "{{ src_private_key }}"
+        dest: "{{ dest_private_key }}"
+        mode: preserve
+
+    - name: Install Git
+      ansible.builtin.apt:
+        name: git
+        update_cache: yes
+
+    - name: Install NodeJS
+      ansible.builtin.apt:
+        name: nodejs
+        state: latest
+        update_cache: yes
+
+    - name: Install NPM
+      ansible.builtin.apt:
+        name: npm
+        state: latest
+        update_cache: yes
+
+    - name: Install Nodemon globally
+      ansible.builtin.shell: |
+        npm install -g nodemon
+    
+    - name: Install NGINX
+      ansible.builtin.apt:
+        name: nginx
+        state: latest
+        update_cache: yes
+

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+  </head>
+  <body>
+    <% if (name === undefined) { %>
+        <form action="/ttt" method="GET">
+            <label htmlFor="name">Enter your name: </label>
+            <input name="name" id="name"></input>
+        </form>
+    <% } else { %>
+        <p>Hello <%= name %>, <%= date %></p>
+        <%- include('board', {board: [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']}); %>
+    <% } %>
+  </body>
+</html>

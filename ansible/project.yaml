@@ -1,0 +1,31 @@
+---
+- name: Setup Node-Express Server
+  hosts: all
+
+  tasks:
+  - name: Remove Old Files
+    ansible.builtin.shell: |
+      rm -rf /root/WP1
+
+  - name: Clone a github repository
+    ansible.builtin.shell: |
+      cd /root
+      git clone git@github.com:JunLee366/CSE356-Proj-ttt.git WP1
+# git clone <git> <directory>
+
+  - name: Install Node Modules
+    ansible.builtin.shell: |
+      cd /root/WP1/ttt
+      npm install
+        
+  - name: Build Project
+    ansible.builtin.shell: |
+      cd /root/WP1/ttt
+      npm build
+  
+  - name: Run Project
+    ansible.builtin.shell: |
+      cd /root/WP1/ttt
+      npm run devstart
+    async: 2592000               # running on background for 1 month :)
+    poll: 0

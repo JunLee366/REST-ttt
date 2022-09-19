@@ -1,0 +1,63 @@
+
+<% for (let i = 0; i < 3; i++) { %>
+<div>
+    <% for (let j = 0; j < 3; j++) { %>
+    <button 
+        type="button"
+        id=<%= 'tile' + (i*3 + j)%>
+        <%= board[i*3 + j] %>
+    >
+    </button>
+    <% } %>
+</div>
+<% } %>
+<div id="winner"></div>
+
+<script type="text/javascript">
+
+    for (let i = 0; i < <%= board.length %>; i++) {
+        let el = document.getElementById("tile" + i);
+        el.onclick = () => {
+            if (!(el.innerText.trim() !== '' || document.getElementById('winner').innerText)) {
+                el.innerText = "X";
+                playerPlay();
+            }
+        }
+    }
+
+    function playerPlay(){
+        fetch("/ttt/play", { 
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                grid: getBoard()
+            })
+        }).then((res) => res.json())
+        .then((res) => {
+            // console.log(res.grid);
+            setBoard(res.grid);
+            if (res.winner !== ' ') {
+                document.getElementById('winner').innerText = "Winner: " + res.winner;
+            }
+        })
+        .catch((err) => console.error(err))
+    }
+    
+    function getBoard() {
+        let board = [];
+        for (let i = 0; i < <%= board.length %>; i++) {
+            let char = document.getElementById("tile" + i).innerText;
+            board.push(char === '' ? ' ' : char);
+        }
+        return board;
+    }
+
+    function setBoard(board) {
+        for (let i = 0; i < board.length; i++) {
+            let el = document.getElementById("tile" + i);
+            el.innerText = board[i];
+        }
+    }
+</script>

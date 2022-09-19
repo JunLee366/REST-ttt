@@ -1,0 +1,4 @@
+cloud:
+  hosts:
+    instance:
+      ansible_host: 209.151.155.50
