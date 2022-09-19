@@ -3,14 +3,15 @@
 <div>
     <% for (let j = 0; j < 3; j++) { %>
     <button 
-        type="button"
+        class="square"
         id=<%= 'tile' + (i*3 + j)%>
         <%= board[i*3 + j] %>
-    >
-    </button>
+    ></button>
     <% } %>
 </div>
+<br /><br /><br /><br /><br />
 <% } %>
+<br />
 <div id="winner"></div>
 
 <script type="text/javascript">

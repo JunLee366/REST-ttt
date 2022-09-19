@@ -1,4 +1,20 @@
-button {
-  width:100px; 
-  height:100px
+.square {
+  width: 96px;
+  height: 96px;
+  font-size: 64px;
+  background: #fff;
+  border: 1px solid #999;
+  float: left;
+  font-weight: bold;
+  line-height: 34px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  text-align: center;
+}
+
+.board-row:after {
+  clear: both;
+  content: "";
+  display: table;
 }
